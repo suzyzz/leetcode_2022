@@ -91,3 +91,20 @@ class Solution:
                 left += 1
         
         return count
+
+    
+#  Method 2: Hash
+ class Solution:
+    def twoSum6(self, nums, target):
+        if len(nums) <= 1:
+            return 0
+        used = {}
+        num = 0
+        for each in nums:
+            if target - each in used and used[target - each] == 0:
+                num += 1
+                used[target - each] = 1
+                used[each] = 1
+            if each not in used:
+                used[each] = 0
+        return num
