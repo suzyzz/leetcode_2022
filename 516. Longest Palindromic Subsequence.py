@@ -13,6 +13,7 @@
 # Output: 5
   
 #  Method DP
+# https://zxi.mytechroad.com/blog/dynamic-programming/leetcode-516-longest-palindromic-subsequence/
 class Solution:
     def longest_palindrome_subseq(self, s):
         if not s:
