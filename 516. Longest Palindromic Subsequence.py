@@ -12,6 +12,7 @@
 # Input: "bbbbb"
 # Output: 5
   
+#  Method DP
 class Solution:
     def longest_palindrome_subseq(self, s):
         if not s:
