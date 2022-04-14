@@ -65,36 +65,31 @@ class Solution:
 # 然后在拷贝数组中找到对应numbers[i]和numbers[j] 的下标，对这两个下标排个序
 class Solution:
     """
-    @param numbers : An array of Integer
-    @param target : target = numbers[index1] + numbers[index2]
-    @return : [index1 + 1, index2 + 1] (index1 < index2)
+    @param numbers: An array of Integer
+    @param target: target = numbers[index1] + numbers[index2]
+    @return: [index1, index2] (index1 < index2)
     """
     def twoSum(self, numbers, target):
-        backUp = numbers[:]
-        numbers = sorted(numbers)
-        i,j = 0,len(numbers) - 1
-        while i < j:
-            # 找到答案
-            if numbers[i] + numbers [j] == target:
-                break
-            # 左指针右移
-            elif numbers[i] + numbers [j] < target:
-                i += 1
-            # 右指针左移
+        if not numbers:
+            return [-1, -1]
+        
+        # transform numbers to a sorted array with index
+        nums = [
+            (number, index)
+            for index, number in enumerate(numbers)
+        ]
+        nums = sorted(nums)
+        
+        left, right = 0, len(nums) - 1
+        while left < right:
+            if nums[left][0] + nums[right][0] > target:
+                right -= 1
+            elif nums[left][0] + nums[right][0] < target:
+                left += 1
             else:
-                j -= 1
-        a,b = 0,0 #标记是否找到，避免i，j值相同的情况
-        for k in range(len(backUp)):
-            #查找对应下标
-            if backUp[k] == numbers[i] and a == 0:
-                i = k
-                a = 1
-            elif backUp[k] == numbers[j] and b == 0:
-                j = k
-                b = 1
-            elif a == 1 and b == 1:
-                break
-        return sorted([i,j])
+                return sorted([nums[left][1], nums[right][1]])
+        
+        return [-1, -1]
       
 #hashmap - Best 找第一遍存起来，然后找第二遍 target - nums[i] 看在不在之前存过的地方
 class Solution(object):
