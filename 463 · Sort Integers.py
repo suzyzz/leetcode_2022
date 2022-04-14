@@ -136,25 +136,27 @@ class Solution:
         if A == None or len(A) == 0:
             return
         self.quickSort(A, 0, len(A) - 1)
-        
+
     def quickSort(self, A, start, end):
         if start >= end:
             return
-        
+
         left, right = start, end
-        pivot = A[(start+end)//2]
-        
+        pivot = A[(start+end)//2] # a) / operator aka classic division b) //operator aka floor division
+        print('left, right, pivot', left, right, pivot)
+
         while left <= right:
-            while left <= right and A[left] < pivot:
+            while left <= right and A[left] < pivot: #找一个不应该在左边的
                 left += 1
-            while left <= right and A[right] > pivot:
+            while left <= right and A[right] > pivot: #找一个不应该在右边的
                 right -= 1
-                
-            if left <= right:
+
+            if left <= right: #如果找到了任意一个或者两个就交换
                 A[left], A[right] = A[right], A[left]
                 left += 1
-                right -= 1
-                
+                right -= 1 #交换完各自走一步
+            
+        #现在左右交换了 所以是（start, right） and （left, end）
         self.quickSort(A, start, right)
         self.quickSort(A, left, end)
 
