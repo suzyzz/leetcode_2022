@@ -98,10 +98,10 @@ class Solution:
         if start >= end:
             return
         
-        self.mergeSort(A, start, (start + end) // 2, tmp)
-        self.mergeSort(A, (start + end) // 2 + 1, end, tmp)
+        self.mergeSort(A, start, (start + end) // 2, tmp) #左边排好序
+        self.mergeSort(A, (start + end) // 2 + 1, end, tmp) #右边排好序
         
-        self.merge(A, start, end, tmp)
+        self.merge(A, start, end, tmp) #归并两边
         
     def merge(self, A, start, end, tmp):
         mid = (start + end) // 2
@@ -129,6 +129,28 @@ class Solution:
             
         for index in range(start, end + 1):
             A[index] = tmp[index]
+
+# B = [38,27,43,3,9,82,10]	
+# mergeSort start, end, tmp 0 6 [0, 0, 0, 0, 0, 0, 0]
+# mergeSort start, end, tmp 0 3 [0, 0, 0, 0, 0, 0, 0]
+# mergeSort start, end, tmp 0 1 [0, 0, 0, 0, 0, 0, 0]
+# mergeSort start, end, tmp 0 0 [0, 0, 0, 0, 0, 0, 0]
+# mergeSort start, end, tmp 1 1 [0, 0, 0, 0, 0, 0, 0]
+# merge start, end, tmp 0 1 [0, 0, 0, 0, 0, 0, 0]
+# mergeSort start, end, tmp 2 3 [27, 38, 0, 0, 0, 0, 0]
+# mergeSort start, end, tmp 2 2 [27, 38, 0, 0, 0, 0, 0]
+# mergeSort start, end, tmp 3 3 [27, 38, 0, 0, 0, 0, 0]
+# merge start, end, tmp 2 3 [27, 38, 0, 0, 0, 0, 0]
+# merge start, end, tmp 0 3 [27, 38, 3, 43, 0, 0, 0]
+# mergeSort start, end, tmp 4 6 [3, 27, 38, 43, 0, 0, 0]
+# mergeSort start, end, tmp 4 5 [3, 27, 38, 43, 0, 0, 0]
+# mergeSort start, end, tmp 4 4 [3, 27, 38, 43, 0, 0, 0]
+# mergeSort start, end, tmp 5 5 [3, 27, 38, 43, 0, 0, 0]
+# merge start, end, tmp 4 5 [3, 27, 38, 43, 0, 0, 0]
+# mergeSort start, end, tmp 6 6 [3, 27, 38, 43, 9, 82, 0]
+# merge start, end, tmp 4 6 [3, 27, 38, 43, 9, 82, 0]
+# merge start, end, tmp 0 6 [3, 27, 38, 43, 9, 10, 82]
+
 
 # Quick Sort
 class Solution:
