@@ -33,16 +33,19 @@ class Solution:
         return self.binarysearch(nums, target, start, mid - 1)
       
 # Method 2: Binary Search      
-class Solution(object):
+class Solution:
     def findPosition(self, nums, target):
-        l = 0
-        r = len(nums)-1
-        while l <= r:
-            m = (r + l) / 2
-            if (nums[m] == target):
-                return m
-            elif (nums[m] > target):
-                r = m - 1
+        if not nums:
+            return -1
+
+        start = 0
+        end = len(nums) - 1
+        while start <= end:
+            mid = (start + end ) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                start = mid + 1
             else:
-                l = m + 1
+                end = mid - 1
         return -1
