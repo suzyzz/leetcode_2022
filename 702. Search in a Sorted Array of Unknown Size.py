@@ -37,11 +37,12 @@ class Solution:
         if not reader or target is None:
             return -1
                 
-        end = 2
-        while reader.get(end) < target:
-            end = end * 2
+        k = 1
+        while reader.get(k - 1) < target:
+            k = k * 2
         
         start = 0
+        end = k - 1
         while start + 1 < end:
             mid = (start + end)//2
             if reader.get(mid) < target:
