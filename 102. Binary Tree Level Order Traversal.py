@@ -52,3 +52,49 @@ class Solution:
                 if node.right:
                     queue.append(node.right)
         return results
+       
+       
+#Method2: 双队列BFS
+class Solution:
+    def levelOrder(self, root):
+        if root is None:
+            return []
+
+        queue = [root]
+        results = []
+        
+        while queue:
+            next_queue = []
+            results.append([node.val for node in queue])
+            
+            for node in queue:
+                if node.left:
+                    next_queue.append(node.left)
+                if node.right:
+                    next_queue.append(node.right)
+            queue = next_queue
+        return results
+  
+  
+#Method: Dummy Node
+class Solution:
+    def levelOrder(self, root):
+        if root is None:
+            return []
+
+        queue = collections.deque([root, None])
+        results, level = [], []
+        
+        while queue:
+            node = queue.popleft()
+            if node is None:
+                results.append(level)
+                if queue:
+                    queue.append(None)
+                    continue
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return results
