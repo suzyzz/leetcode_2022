@@ -182,6 +182,94 @@ class Solution:
         self.quickSort(A, start, right)
         self.quickSort(A, left, end)
 
+	
+# 这种似懂非懂的感觉很不好 下次一定还是不会
+
+# Quicksort 的原理 = partition by pivot + Recursion
+#----------------------------------------------------------------------------------------------------------  
+# partition的部分：
+#     循环条件为什么要用 <= 不是 <
+# 
+#       1. 让partition之后的片段没有重复部分
+# 
+#        比如 如果是 left < right [3, -3, 5, 2, 1, -6]， piovt = 5， 
+#                                 0,  1, 2, 3, 4,  5       
+#           现在需要swap 5， -6
+#            if left < right:                            （L = 2, R = 5）
+#                a[left], a[right] = a[right], a[left]    ([3, -3, -6, 2, 1, -5])
+#                left += 1
+#                right -= 1                              （L = 3, R = 4）
+#        while left < right:                             （False 下一个循环进不去 while loop结束）
+#        self.quick_sort(a, start, right)                 (start = 0, right = 4) => [3, -3, -6, 2, 1]
+#        self.quick_sort(a, left, end)                    (left = 3, end = 5)    => [2, 1, -5] 2,1 ！！！！！！重复出现了！！！！！！
+# 
+#       正确的做法是
+#            if left <= right:                            （L = 2, R = 5）
+#                a[left], a[right] = a[right], a[left]     ([3, -3, -6, 2, 1, -5])
+#                left += 1
+#                right -= 1                               （L = 3, R = 4）
+#        while left <= right:                             （True)
+#            while left <= right and a[left] < pivot:     （True）
+#                left += 1                                 (L = 4, R = 4）
+#            while left <= right and a[right] > pivot:    （True）
+#                right -= 1                               （L = 4, R = 3）
+#
+#            if left <= right:                            （False）
+#                a[left], a[right] = a[right], a[left]
+#                left += 1
+#                right -= 1                              
+#        self.quick_sort(a, start, right)                 (start = 0, right = 3) => [3, -3, -6, 2]
+#        self.quick_sort(a, left, end)                    (left = 4, end = 5)    => [1, -5] ！！！！！！没有重复的partition！！！！！！
+#----------------------------------------------------------------------------------------------------------  
+#           2. 最后的 if left <= right 避免StackOverflow：
+#
+#        比如 如果是 left < right 走到了 [1 , 2]， piovt = 1， L=1   R=2
+#                                         
+#        while left < right:                            （True）
+#            while left < right and a[left] < pivot:    （False）
+#                left += 1                              
+#            while left < right and a[right] > pivot:   （True）
+#                right -= 1                             （L = 1, R = 1）
+#
+#            if left < right:                            (False)
+#                a[left], a[right] = a[right], a[left]
+#                left += 1
+#                right -= 1
+#         self.quick_sort(a, start, right)               (start = 1, right = 1)
+#         self.quick_sort(a, left, end)                  (left = 1, end = 2) => 又来一次一样的 [1 , 2]， piovt = 1， L=1   R=2
+#
+#        如果是 left <= right 走到了 [1 , 2]， piovt = 1， L=1   R=2
+#                                         
+#        while left <= right:                            （True）
+#            while left <= right and a[left] < pivot:    （False）
+#                left += 1                              
+#            while left <= right and a[right] > pivot:   （True）
+#                right -= 1                              （L = 1, R = 1）
+#
+#            if left <= right:                           （True）
+#                a[left], a[right] = a[right], a[left]
+#                left += 1
+#                right -= 1                              （L = 2, R = 0）
+#         self.quick_sort(a, start, right)                (start = 1, right = 0) => return None
+#         self.quick_sort(a, left, end)                   (left = 2, end = 2)    => return None
+
+
+
+#----------------------------------------------------------------------------------------------------------  
+# Recursion 的部分：
+#     1. 为什么要用start，end 和 left，right这两套？
+#           因为start，end是放在stack里存储partition的， left，right是在partition里做指针的
+#     2. 他们在recusion的时候分别的指向是怎么传递的
+#           全，左，右
+#           全 => 左 => 。。。 => 直到左边走到底 （剩1，2个不能走的） 
+#           => 走倒数第一层的右 => 倒数第二层右 => 。。。=> 走到第一层的右 => 再分成左右往下走
+#           从上到左下 再从右下到上 再走右上到右下
+#     3. 判断recursion结束条件是怎么设计的
+#           走到底端 - 没有元素（start > end) 或者只有一个元素 （start = end) 这种情况不用置换 直接退出
+#     4. 这个return None 系统是怎么检测到a的值咋变化的呢
+#           不知道 magic吧
+
+
 # Heap Sort
 class Solution:
     def sortIntegers(self, A):
