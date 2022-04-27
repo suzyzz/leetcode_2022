@@ -56,3 +56,55 @@ class Solution(object):
                     else:
                         left += 1
         return res
+
+       
+       
+# 自己写的错误例子 先固定n3, n4
+class Solution:
+    def four_sum(self, numbers: List[int], target: int) -> List[List[int]]:
+        numbers.sort()
+        answer = []
+        print(numbers)
+        for n3 in range(2, len(numbers) - 1):
+            if n3 != 2 and numbers[n3] == numbers[n3 - 1]:
+                continue
+            for n4 in range(n3 + 1, len(numbers)):
+                if n4 != n3 + 1 and numbers[n4] == numbers[n4 - 1]:
+                    continue
+
+                n1, n2 = 0, n3 - 1
+                k = target - numbers[n3] - numbers[n4]
+                print(n1, n2, n3, n4, k, [numbers[n1], numbers[n2], numbers[n3], numbers[n4]])
+                while n1 < n2:
+
+                    if numbers[n1] + numbers[n2] == k:
+                        answer.append([numbers[n1], numbers[n2], numbers[n3], numbers[n4]])
+                        n1 += 1                     
+                        n2 -= 1    
+                        while n1 < n2 and numbers[n1] == numbers[n1 - 1]:
+                            n1 += 1
+                        while n1 < n2 and numbers[n2] == numbers[n2 + 1]:
+                            n2 -= 1                  
+                    elif numbers[n1] + numbers[n2] < k:
+                        n1 += 1                        
+                    else:
+                        n2 -= 1
+                        
+        return answer
+
+        # for n3 in range(2, len(numbers) - 1):
+        #     if n3 != 2 and numbers[n3] == numbers[n3 - 1]:
+        #         continue
+        #     for n4 in range(n3 + 1, len(numbers)):
+        #         if n4 != n3 + 1 and numbers[n4] == numbers[n4 - 1]:
+        #             continue        
+
+# Test Data 
+# [1,0,-1,-1,-1,-1,0,1,1,1,2]
+# 2
+# n3, n4 去重有问题
+# [。。。， 1, 1, 1, 1, 2]
+#         n3, n4              <= 这样就错过了让 n2 = 1 的机会
+#                n3, n4       <= 应该在这里
+
+#  先固定n3, n4的话这个问题不好避免，最好还是先固定n1, n2,
