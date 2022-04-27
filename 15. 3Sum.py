@@ -97,3 +97,47 @@ class Solution:
                 left += 1   
               
  
+# 自己写的 a+b = c 慢，没用到two sum skill
+ class Solution:
+    """
+    @param numbers: Give an array numbers of n integer
+    @return: Find all unique triplets in the array which gives the sum of zero.
+             we will sort your return value in output
+    """
+    def three_sum(self, numbers: List[int]) -> List[List[int]]:
+        numbers.sort()
+        left = 0
+        answer = []
+        while left < len(numbers) - 2:
+            right = left + 1
+            while right < len(numbers) - 1:
+                if 0 - (numbers[left] + numbers[right]) in numbers[right + 1:]:
+                    if [numbers[left], numbers[right], 0 - (numbers[left] + numbers[right])] not in answer:
+                        answer.append([numbers[left], numbers[right], 0 - (numbers[left] + numbers[right])]) 
+                right += 1
+            left += 1
+        return answer
+       
+ #跟two sum 一样 稍微快一些      
+ class Solution:
+    def threeSum(self, numbers):
+        # write your code here
+        if not numbers or len(numbers)<3: return []
+        numbers = sorted(numbers) #必须先sort
+        sum_list = []
+        for i in range(len(numbers)-2): #第一个数 遍历所有num 无需考虑最后两个
+            if i!=0 and numbers[i]==numbers[i-1]: #avoid duplicates
+                continue
+            j = i+1
+            k = len(numbers)-1
+            while j<k:
+                if numbers[j]+numbers[k]+numbers[i] == 0:
+                    sum_list.append([numbers[i],numbers[j],numbers[k]])
+                    j += 1
+                    while j<k and numbers[j]==numbers[j-1]: #avoid duplicates
+                        j+=1
+                elif numbers[j]+numbers[k]+numbers[i] < 0: #小于零 增大j 数值更大
+                    j += 1
+                else: #小于零 减小k 数值更小
+                    k -=1
+        return sum_list
