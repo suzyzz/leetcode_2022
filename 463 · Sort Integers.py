@@ -94,22 +94,22 @@ class Solution:
         tmp = [0] * len(A)
         self.mergeSort(A, 0, len(A) - 1, tmp)
         
-    def mergeSort(self, A, start, end, tmp):
+    def mergeSort(self, A, start, end, tmp): #这里只是创建stack variable start，end 不做任何运算或判断
         if start >= end:
             return
         
         self.mergeSort(A, start, (start + end) // 2, tmp) #左边排好序
         self.mergeSort(A, (start + end) // 2 + 1, end, tmp) #右边排好序
         
-        self.merge(A, start, end, tmp) #归并两边
+        self.merge(A, start, end, tmp) #归并两边 运算与判断
         
-    def merge(self, A, start, end, tmp):
+    def merge(self, A, start, end, tmp): #merge two sorted array
         mid = (start + end) // 2
         leftIndex = start
         rightIndex = mid + 1
         index = leftIndex
         
-        while leftIndex <= mid and rightIndex <= end:
+        while leftIndex <= mid and rightIndex <= end: #当两边都没走完的时候 选小的放
             if A[leftIndex] <= A[rightIndex]:
                 tmp[index] = A[leftIndex]
                 leftIndex += 1
@@ -118,16 +118,17 @@ class Solution:
                 rightIndex += 1
             index += 1
             
-        while leftIndex <= mid:
+        #这里写for loop也可以，但是while loop 更美观
+        while leftIndex <= mid: #当右边走完的时候 放剩余的左边
             tmp[index] = A[leftIndex]
             index += 1
             leftIndex += 1
-        while rightIndex <= end:
+        while rightIndex <= end: #当左边走完的时候 放剩余的右边
             tmp[index] = A[rightIndex]
             index += 1
-            rightIndex += 1
-            
-        for index in range(start, end + 1):
+            rightIndex += 1            
+
+        for index in range(start, end + 1): #把整理好的放到A里 因为没有return 所以A是最后验证的变量
             A[index] = tmp[index]
 
 # B = [38,27,43,3,9,82,10]	
