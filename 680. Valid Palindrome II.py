@@ -70,3 +70,22 @@ class Solution:
             left += 1
             right -= 1
         return left, right
+
+       
+#Method: 自己写的第二遍 更好的办法
+class Solution:
+    def valid_palindrome(self, s: str) -> bool:
+
+        valid, left, right = self.is_palindromne(s, 0, len(s) - 1)
+        valid_moveleft, _, _ = self.is_palindromne(s, left + 1, right)
+        valid_moveright, _, _ = self.is_palindromne(s, left, right - 1)
+        return valid or valid_moveleft or valid_moveright
+
+    def is_palindromne(self, s, left, right):
+        while left < right:
+            if s[left] == s[right]:
+                left += 1
+                right -= 1 
+            else: 
+                return False, left, right
+        return True, left, right
