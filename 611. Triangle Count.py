@@ -20,19 +20,18 @@
 
 # Method: Two pointer 相向双指针, fix largest edge
 class Solution:
-    def triangleCount(self, S):
-        S.sort()
-        
-        ans = 0
-        for i in range(len(S)):
-            left, right = 0, i - 1
-            while left < right:
-                if S[left] + S[right] > S[i]:
-                    ans += right - left
-                    right -= 1
+    def triangleCount(self, s: List[int]) -> int:
+        s.sort()
+        count = 0
+        for large in range(2, len(s)):
+            small, mid = 0, large - 1
+            while small < mid:
+                if s[small] + s[mid] > s[large]:
+                    count += (mid - small)
+                    mid -= 1
                 else:
-                    left += 1
-        return ans
+                    small += 1
+        return count
       
 # Method: Two pointer 同向双指针, fix smallest edge
 import bisect
@@ -49,3 +48,19 @@ class SolutionBisect:
                 total += k - (j+1)
                     
         return total
+    
+    
+# 自己写的while if没用对 太慢能过
+class Solution:
+    def triangle_count(self, s: List[int]) -> int:
+        s.sort()
+        count = 0
+        for large in range(len(s)):
+            small, mid = 0, large - 1
+            while small < mid:
+                while small < mid and s[small] + s[mid] <= s[large]:
+                    small += 1
+                while small < mid and s[small] + s[mid] > s[large]:
+                    count += (mid - small)
+                    mid -= 1
+        return count
