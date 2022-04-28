@@ -36,7 +36,7 @@ class Solution:
             return n - 1
         return self.fibonacci(n - 1) + self.fibonacci(n - 2）
                                                      
-# 自己写2： recursion + 记忆 通过
+# 自己写2： recursion + 记忆 通过 103
 class Solution:
     def fibonacci(self, n):
         if n <=2:
@@ -46,3 +46,22 @@ class Solution:
         for i in range(n - 3):
             fib = [fib[1], fib[2], fib[1] + fib[2]]
         return fib[2]
+# 自己写3： loop 102
+class Solution:
+    def fibonacci(self, n: int) -> int:
+        if n < 2:
+            return n - 1
+        n1, n2 = 0, 1
+        for i in range(n - 3):
+            n1, n2 = n2, n1 + n2
+        return n1 + n2
+                                                      
+# recursion TLE 但是这是学习递归的好例子
+class Solution:
+    def dfs(self, n):
+        if n <= 2:
+            return n - 1
+        return self.dfs(n - 1) + self.dfs(n - 2)
+    
+    def fibonacci(self, n):
+        return self.dfs(n)
