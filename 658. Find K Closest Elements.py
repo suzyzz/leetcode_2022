@@ -61,5 +61,40 @@ class Solution:
             return end
         return len(a)
 
+# 自己写的binary search + 背向双指针 也是122ms
+class Solution:
+    def k_closest_numbers(self, a: List[int], target: int, k: int) -> List[int]:
+        if not a or target is None or k == 0:
+            return []
+        left, right = self.findtargetindicator(a, 0, len(a) - 1, target)
+        return self.findelements(a, left, right, k, target)
 
+    def findtargetindicator(self, a, start, end, target):
+        while start + 1 < end:
+            mid = (start + end) // 2
+            if a[mid] < target:
+                start = mid
+            else:
+                end = mid
+        return start, end
+
+    def findelements(self, a, left, right, k, target):
+        answer = []       
+        for i in range(k):    
+            if left >= 0 and right < len(a):
+                if target - a[left] <= a[right] - target:
+                    answer.append(a[left])
+                    left -= 1
+                else:
+                    answer.append(a[right])
+                    right += 1
+            elif left < 0 and right < len(a):
+                answer.append(a[right])
+                right += 1
+            elif left >= 0 and right >= len(a):
+                answer.append(a[left])
+                left -= 1
+            else:
+                return answer
+        return answer
         
