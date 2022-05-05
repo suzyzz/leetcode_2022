@@ -20,7 +20,7 @@
 # ]
 # Output: 3
 
-#自己写 意思对了 慢 321
+#自己写 差不多是最优
 import collections
 
 DIRECTIONS = [(1, 0), (0, -1), (-1, 0), (0, 1)]
