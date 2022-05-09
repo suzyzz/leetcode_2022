@@ -46,7 +46,7 @@ class Solution:
             self.dfs(nums, permutation, visited, permutations)
             visited.remove(num)
             permutation.pop()
-#其实不需要visited也可以
+#其实不需要visited也可以， 因为visited == permutations, list也可以用来判断 if in list
 class Solution:
     def permute(self, nums):
         if not nums:
