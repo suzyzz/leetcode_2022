@@ -46,3 +46,24 @@ class Solution:
             self.dfs(nums, permutation, visited, permutations)
             visited.remove(num)
             permutation.pop()
+#其实不需要visited也可以
+class Solution:
+    def permute(self, nums):
+        if not nums:
+            return [[]]
+            
+        permutations = []
+        self.dfs(nums, [], permutations)
+        return permutations
+
+    def dfs(self, nums, permutation, permutations):
+        if len(nums) == len(permutation):
+            permutations.append(list(permutation))
+            return
+
+        for num in nums:
+            if num in permutation:
+                continue
+            permutation.append(num)
+            self.dfs(nums, permutation, permutations)
+            permutation.pop()
