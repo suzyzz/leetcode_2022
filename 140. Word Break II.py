@@ -52,8 +52,25 @@ class Solution:
             
         memo[s] = partitions
         return partitions
-      
- # Method 2: DP*2
+
+# Method 1 short version:
+class Solution:
+    def wordBreak(self, s, wordDict):
+        return self.dfs(s, wordDict, {})
+        
+    def dfs(self, s, wordDict, memo):
+        if s in memo: return memo[s]
+        if not s: return []
+        res = []
+        if s in wordDict: res.append(s)
+        for i in range(1, len(s)+1):
+            if s[:i] not in wordDict: continue
+            for sg in self.dfs(s[i:], wordDict, memo):
+                res.append(s[:i] + ' ' + sg)
+        memo[s] = res
+        return res
+       
+# Method 2: DP*2
 class Solution:
     """
     @param: s: A string
