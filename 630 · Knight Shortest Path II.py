@@ -117,8 +117,6 @@ class Solution:
 
         for j in range(m):
             for i in range(n):
-                print(i, j)
-            
                 if grid[i][j]:
                     continue
                 for delta_x, delta_y in DIRECTIONS:
