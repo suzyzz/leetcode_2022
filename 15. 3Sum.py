@@ -141,3 +141,36 @@ class Solution:
                 else: #小于零 减小k 数值更小
                     k -=1
         return sum_list
+
+       
+       
+       
+#  20220902 - 枚举+2sum/hash
+ class Solution:
+    """
+    @param numbers: Give an array numbers of n integer
+    @return: Find all unique triplets in the array which gives the sum of zero.
+             we will sort your return value in output
+    """
+
+    def three_sum(self, numbers: List[int]) -> List[List[int]]:
+        if len(numbers) < 3:
+            return []
+        numbers.sort()
+        result = []
+        for i in range(len(numbers) - 2):
+            if i > 0 and numbers[i] == numbers[i-1]:
+                continue
+            self.twosum(numbers, i, result)
+        return result
+
+    def twosum(self, numbers, i, result):
+        target = -numbers[i]
+        hash = {target - numbers[i + 1]: numbers[i + 1]}
+        for j in range(i + 2, len(numbers)):
+            if numbers[j] in hash:
+                solution = [-target, hash[numbers[j]], numbers[j]]
+                if solution in result:
+                    continue
+                result.append(solution)
+            hash[target - numbers[j]] =  numbers[j] 
