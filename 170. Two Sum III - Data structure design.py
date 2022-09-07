@@ -108,3 +108,34 @@ class TwoSum(object):
                 (value - num != num or self.count[num] > 1):
                 return True
         return False
+
+       
+# Method 4: 20220906	append O(1) + two sum (hash) O(n)	自己想出来的
+# 
+class TwoSum:
+    """
+    @param number: An integer
+    @return: nothing
+    """
+    
+    def __init__(self):
+        self.data = []
+
+    def add(self, number):
+        self.data.append(number)
+
+    """
+    @param value: An integer
+    @return: Find if there exists any pair of numbers which sum is equal to the value.
+    """
+    def find(self, value):
+        if len(self.data) < 2:
+            return False
+        self.data.sort()
+        hash = {}
+        for n in self.data:
+            if n in hash:
+                return True
+            else:
+                hash[value - n] = n
+        return False
