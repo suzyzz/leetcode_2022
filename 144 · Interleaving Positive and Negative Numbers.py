@@ -9,7 +9,8 @@
 # Outout : [-1, 5, -2, 4, -3, 6]
 # Explanation :  any other reasonable answer.
 
-# 关答 双指针-相向 O(nlogn)
+# 关答 partition 模板 + 相向指针排列
+
 
 from typing import (
     List,
