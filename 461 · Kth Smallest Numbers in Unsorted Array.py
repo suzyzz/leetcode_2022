@@ -13,7 +13,7 @@
 # Challenge
 # An O(nlogn) algorithm is acceptable, if you can do it in O(n), that would be great.
 
-# partition, quickselect - O(nlogn)	一遍写出关答
+# quickselect - O(n)	一遍写出关答
 
 class Solution:
     """
