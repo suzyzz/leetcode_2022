@@ -25,7 +25,8 @@
 
 # Follow up: Could you come up with a one-pass algorithm using only constant extra space?
 
-# Method: two pointer
+
+# Method 1: 一次partion
 class Solution:
     """
     @param nums: A list of integer which is 0, 1 or 2 
@@ -46,3 +47,38 @@ class Solution:
                 right -= 1
             else:
                 mid += 1
+# 两次partition		
+    def sortColors(self, nums):
+        start = self.pivot_partition(nums, 1, 0)
+        self.pivot_partition(nums, 2, start)
+        
+    def pivot_partition(self, nums, pivot, start):      
+        l, r = start, len(nums) - 1
+        while l <= r:
+            while l <= r and nums[l] < pivot:
+                l += 1
+            while l <= r and nums[r] >= pivot:
+                r -= 1
+            if l <= r:
+                nums[l], nums[r] = nums[r], nums[l]
+                l += 1
+                r -= 1
+                
+        return l
+# 暴力统计个数		
+    def sortColors(self, nums):
+        # write your code here
+        if not nums:
+            return []
+
+        color_cnt = [0] * 3
+        for i in nums:
+            color_cnt[i] += 1
+        
+        index = 0
+        for i in range(len(color_cnt)):
+            cnt = color_cnt[i]
+            while cnt > 0:
+                nums[index] = i
+                cnt -= 1
+                index += 1
