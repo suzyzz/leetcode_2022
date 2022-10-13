@@ -68,3 +68,44 @@ class Solution:
                     continue
                 words.append(left + char + right)
         return words
+
+       
+       
+# 2022-10-12 类似关答 但是慢
+from typing import (
+    Set,
+)
+import collections
+class Solution:
+    """
+    @param start: a string
+    @param end: a string
+    @param dict: a set of string
+    @return: An integer
+    """
+    def ladder_length(self, start: str, end: str, dict: Set[str]) -> int:
+        used = {start}
+        level = 1
+        queue = collections.deque([start])
+        while queue:            
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                print(node)
+                for i in range(len(node)):
+                    flag = self.replace_letter(node, i, queue, used, end, dict, level)
+                    if flag:
+                        return level + 1
+            level += 1
+        return 0
+    
+    def replace_letter(self, node, i, queue, used, end, dict, level):
+        for letter in 'abcdefghijklmnopqrstuvwxyz':
+            new = node[0:i] + letter + node[i + 1:]
+            if new == end:
+                return True
+            if new in used:
+                continue
+            if new in dict:
+                used.add(new)
+                queue.append(new)
+        return False
