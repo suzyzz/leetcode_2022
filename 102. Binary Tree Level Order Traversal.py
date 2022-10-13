@@ -98,3 +98,32 @@ class Solution:
             if node.right:
                 queue.append(node.right)
         return results
+
+       
+       
+       
+       
+       
+#     双队列 - deque versiono 自己写对
+    def level_order(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+        queue = collections.deque([root])
+        next_level = collections.deque()
+        result = []
+        level = []
+        while queue:
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:
+                next_level.append(node.left)
+            if node.right:
+                next_level.append(node.right)
+            if not queue:
+                result.append(level)
+                level = []
+                queue = next_level
+                next_level = collections.deque()
+        
+        return result
+                
