@@ -90,7 +90,6 @@ class Solution:
         while queue:            
             for _ in range(len(queue)):
                 node = queue.popleft()
-                print(node)
                 for i in range(len(node)):
                     flag = self.replace_letter(node, i, queue, used, end, dict, level)
                     if flag:
