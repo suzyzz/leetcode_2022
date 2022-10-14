@@ -18,7 +18,7 @@
 # *****任意两个条件满足 => 是树
 
 
-# BFS - O(max(n, m))
+# BFS - O(max(n, m)) 用条件1，2
 from typing import (
     List,
 )
@@ -64,7 +64,7 @@ class Solution:
 
       
       
-#      并查集 - O(M Alpha(N))，这里Alpha是Ackerman函数的某个反函数
+#      并查集 - O(M Alpha(N))，这里Alpha是Ackerman函数的某个反函数 用条件2，3
 from typing import (
     List,
 )
