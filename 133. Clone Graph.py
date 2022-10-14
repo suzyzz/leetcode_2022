@@ -109,7 +109,7 @@ class Solution:
                 new_node.neighbors.append(mapping[neighbor]) #new_neighbor = UndirectedGraphNode(neighbor.label)
 
  
-# 自己写的BFS 简短一些： hashmap[old_node] = new_node
+# 20221014 自己写的BFS 简短一些： hashmap[old_node] = new_node
 
 import collections
 class Solution:
