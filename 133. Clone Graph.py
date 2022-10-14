@@ -108,4 +108,36 @@ class Solution:
             for neighbor in node.neighbors:
                 new_node.neighbors.append(mapping[neighbor]) #new_neighbor = UndirectedGraphNode(neighbor.label)
 
-                
+ 
+# 自己写的BFS 简短一些： hashmap[old_node] = new_node
+
+import collections
+class Solution:
+    """
+    @param node: A undirected graph node
+    @return: A undirected graph node
+    """
+    def clone_graph(self, node: UndirectedGraphNode) -> UndirectedGraphNode:
+        if not node:
+            return 
+        root = node
+        new_nodes = self.deepcopy_nodes(node)
+        return self.deepcode_neighbors(root, new_nodes)
+        
+    def deepcopy_nodes(self, node):
+        new_nodes = {}
+        queue = collections.deque([node])
+        while queue:
+            old_node = queue.popleft()           
+            if old_node not in new_nodes:
+                new_nodes[old_node] = UndirectedGraphNode(old_node.label)
+            for neighbor in old_node.neighbors:
+                if neighbor not in new_nodes:
+                    queue.append(neighbor)
+        return new_nodes
+    
+    def deepcode_neighbors(self, root, new_nodes):
+        for node in new_nodes:
+            new_nodes[node].neighbors = [new_nodes[x] for x in node.neighbors]             
+        return new_nodes[root]
+
