@@ -45,7 +45,6 @@ class Solution:
             new_zombie_count = len(queue)
             for _ in range(new_zombie_count):
                 (x, y) = queue.popleft()
-                print('turn_count', turn_count, 'x,y', x, y)
                 for direction in DIRECTIONS:
                     new_x, new_y = x + direction[0], y + direction[1]
                     if self.is_valid(new_x, new_y, n, m, grid):
