@@ -63,7 +63,7 @@ class Solution:
                     
                     
                     
-#关答 262ms  
+#关答 262ms  - O(M*N)
 from collections import deque
 
 DIRECTIONS = [(1, 0), (0, -1), (-1, 0), (0, 1)]
