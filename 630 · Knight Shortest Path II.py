@@ -160,3 +160,46 @@ class Solution:
         if dp[n - 1][(m - 1) % 3] == float('inf'):
             return -1
         return dp[n - 1][(m - 1) % 3]
+
+    
+#     202210181 - 自己写的简单BFS
+
+from typing import (
+    List,
+)
+import collections
+DIRECTIONS = [(1, 2), (-1, 2), (2, 1), (-2, 1)]
+class Solution:
+    def shortestPath2(self, grid):
+        n, m = len(grid), len(grid[0])
+        if n - 1 == 0 and m - 1 == 0:
+            return 0
+        if n <= 0 or m <= 0:
+            return -1
+        if grid[n-1][m-1]:
+            return -1
+        queue = collections.deque([(0, 0)])
+        visited = set((0, 0))
+        route = 0
+        while queue:
+            route += 1
+            for _ in range(len(queue)):
+                (x, y) = queue.popleft()
+                # print(x, y)
+                for (delta_x, delta_y) in DIRECTIONS:
+                    new_x, new_y = x + delta_x, y + delta_y
+                    if new_x == n -1 and new_y == m - 1:
+                        return route
+                    if (new_x, new_y) in visited:
+                        continue
+                    if self.is_valid(grid, new_x, new_y):
+                        queue.append((new_x, new_y))
+                        visited.add((new_x, new_y))
+        return -1
+
+    def is_valid(self, grid, new_x, new_y):
+        if new_x < 0 or new_x > len(grid) - 1 or new_y < 0 or new_y > len(grid[0]) - 1:
+            return False
+        if grid[new_x][new_y]:
+            return False
+        return True
