@@ -55,23 +55,24 @@ class Solution:
     @return: whether the ball could stop at the destination
     """
     def has_path(self, maze: List[List[int]], start: List[int], destination: List[int]) -> bool:
+        n, m = len(maze), len(maze[0])
         queue = collections.deque([(start[0], start[1])])
-        visited = {(start[0], start[1])}
+        visited = {start[0] * n + start[1]}
         while queue:
-            (x, y) = queue.popleft()
-            if x == destination[0] and y == destination[1]:
-                return True
+            (x, y) = queue.popleft() 
             for (delta_x, delta_y) in DIRECTIONS:
                 new_x, new_y = x + delta_x, y + delta_y
-                if (new_x, new_y) in visited:
-                    continue
-                else:
-                    visited.add((new_x, new_y))
                 while not self.is_stop(maze, new_x, new_y):
                     new_x, new_y = new_x + delta_x, new_y + delta_y
                 new_x -= delta_x
                 new_y -= delta_y
-                queue.append((new_x, new_y))               
+                if x == destination[0] and y == destination[1]:
+                    return True
+                if new_x * n + new_y in visited:
+                    continue
+                else:
+                    visited.add(new_x * n + new_y)
+                    queue.append((new_x, new_y))               
         return False
 
         
