@@ -40,3 +40,16 @@ class Solution:
         if count != 0:
             answer += (count + 1) * count // 2
         return answer
+
+#    自己写的同向 也不错啊
+    def string_count(self, str: str) -> int:
+        i, ans = 0, 0
+        while i < len(str):
+            while i < len(str) and str[i] == '1': 
+                i += 1
+            j = i
+            while j < len(str) and str[j] == '0':
+                j += 1
+            ans += (j - i) * (j - i + 1) // 2
+            i = j
+        return ans
