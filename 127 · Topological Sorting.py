@@ -96,8 +96,29 @@ class Solution:
                     queue.append(next_node.label)
 
         return topo_order
+    
+# 20221027 - 自己写的一次过 跟关答一样时间/方法
+    def topSort(self, graph):
+        in_degree, order = {}, []
+        for node in graph:
+            in_degree[node] = in_degree.get(node, 0)
+            for neighbor in node.neighbors:
+                in_degree[neighbor] = in_degree.get(neighbor, 0) + 1
+        queue = collections.deque([])
+        for key, val in in_degree.items():
+            if val == 0:
+                queue.append(key)
 
+        while queue:
+            node = queue.popleft()
+            order.append(node)
+            for neighbor in node.neighbors:
+                in_degree[neighbor] -= 1
+                if in_degree[neighbor] == 0:
+                    queue.append(neighbor)
 
+        return order if len(order) == len(graph) else []
+            
 
 
 
