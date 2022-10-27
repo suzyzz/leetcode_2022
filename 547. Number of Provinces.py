@@ -49,3 +49,33 @@ class Solution:
                                 visisted[j] = True # 标记访问
                                 q.append(j)     # 压入队列
             return ans
+
+# 自己写的BFS 也不赖
+import collections
+DIRECTIONS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+class Solution:
+    """
+    @param m: a matrix
+    @return: the total number of friend circles among all the students
+    """
+    def find_circle_num(self, m: List[List[int]]) -> int:
+        n, ans = len(m), 0
+        visited = set()
+        for i in range(n):
+            if i in visited:
+                continue
+            queue = collections.deque([i])
+            ans += 1
+            visited.add(i)
+            self.bfs(queue, m, i, n, visited)
+        return ans
+    
+    def bfs(self, queue, m, i, n, visited):
+        while queue:
+            node = queue.popleft()
+            for j in range(i + 1, n):
+                if j in visited:
+                    continue
+                if m[node][j]:
+                    queue.append(j)
+                    visited.add(j)
