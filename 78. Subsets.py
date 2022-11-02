@@ -60,3 +60,35 @@ class Solution:
             # 回溯
             subset.pop()
 
+#         Method 4    
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        output = [[]]
+        for num in nums:
+            output.extend([subset + [num] for subset in output])
+        return output
+
+ # Method 5 - BFS    
+        def subsets(self, nums: List[int]) -> List[List[int]]:
+        queue = [[]]
+        index = 0
+        while index < len(queue):
+            subset = queue[index]
+            index += 1
+            for num in nums:
+                if subset and subset[-1] >= num:
+                    continue
+                queue.append(subset + [num])
+        return queue
+    
+    
+  # Method 6 - BFS
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        queue = [[]]
+        for num in nums:
+            for i in range(len(queue)):
+                subset = list(queue[i])
+                subset.append(num)
+                queue.append(subset)
+        return queue
