@@ -108,3 +108,59 @@ class Solution:
                 used.add(new)
                 queue.append(new)
         return False
+
+       
+#        20221121 双向BFS chatch
+from typing import (
+    Set,
+)
+import collections
+class Solution:
+    """
+    @param start: a string
+    @param end: a string
+    @param dict: a set of string
+    @return: An integer
+    """
+    def ladder_length(self, start: str, end: str, dict: Set[str]) -> int:
+        dict.add(end)
+        forward_queue = collections.deque([start])
+        forward_set = {start}
+        backward_queue = collections.deque([end])
+        backward_set = {end}
+        distance = 0
+        graph = {}
+        self.get_next_word(graph, dict, start)
+        self.get_next_word(graph, dict, end)
+        print(graph)
+        while forward_queue and backward_queue:
+            distance += 1
+            if self.enter_queue(dict, graph, forward_queue, forward_set, backward_set):
+                return distance
+            distance += 1
+            if self.enter_queue(dict, graph, backward_queue, backward_set, forward_set):
+                return distance
+        return -1
+    
+    def get_next_word(self, graph, dict, word):
+        graph[word] = []
+        for i in range(len(word)):
+            for x in "abcdefghijklmnopqrstuvwxyz":
+                if word[i] == x:
+                    continue
+                if word[:i] + x + word[i + 1:] in dict:
+                    graph[word].append(word[:i] + x + word[i + 1:])
+        
+    def enter_queue(self, dict, graph, current_queue, current_visited, opposite_visited):
+        for _ in range(len(current_queue)):
+            curr_word = current_queue.popleft()
+            if curr_word in opposite_visited:
+                return True
+            if curr_word not in graph:
+                self.get_next_word(graph, dict, curr_word)
+            for next_word in graph[curr_word]:
+                if next_word in current_visited:
+                    continue
+                current_queue.append(next_word)
+                current_visited.add(next_word)
+        return False
