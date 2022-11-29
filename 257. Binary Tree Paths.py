@@ -17,25 +17,8 @@
 # The number of nodes in the tree is in the range [1, 100].
 # -100 <= Node.val <= 100
 
-#Method: DFS
-from lintcode import (
-    TreeNode,
-)
-
-"""
-Definition of TreeNode:
-class TreeNode:
-    def __init__(self, val):
-        self.val = val
-        self.left, self.right = None, None
-"""
-
+#Method: DFS - traversal - reccursion 关答
 class Solution:
-    """
-    @param root: the root of the binary tree
-    @return: all root-to-leaf paths
-             we will sort your return value in output
-    """
     def binary_tree_paths(self, root):
         if not root:
             return []
@@ -63,11 +46,6 @@ class Solution:
         
 #Method: Divide and Conquer        
 class Solution:
-    """
-    @param root: the root of the binary tree
-    @return: all root-to-leaf paths
-             we will sort your return value in output
-    """
     def binary_tree_paths(self, root):
         paths = []
         if not root:
@@ -81,3 +59,24 @@ class Solution:
             paths.append(str(root.val) + "->" + path)
         
         return paths
+
+# 自己写的traversal 没官答简洁 但时间一样
+    def binary_tree_paths(self, root: TreeNode) -> List[str]:
+        if not root:
+            return []
+        paths = []
+        self.traversal(root, paths, [])
+        return paths
+    
+    def traversal(self, root, paths, path):
+        path.append(root)
+        if not root.left and not root.right:
+            paths.append('->'.join([str(node.val) for node in path]))
+        if root.left:
+            self.traversal(root.left, paths, path)
+            path.pop()
+        if root.right:
+            self.traversal(root.right, paths, path)
+            path.pop()
+       
+ 
