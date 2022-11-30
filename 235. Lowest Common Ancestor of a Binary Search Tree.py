@@ -16,7 +16,7 @@
 # Input: root = [2,1], p = 2, q = 1
 # Output: 2
 
-#关答： DC
+#关答： DC - Recursion
 """
 Definition of TreeNode:
 class TreeNode:
@@ -61,8 +61,37 @@ class Solution:
         return None
       
       
-      
-      
+# find path DC - Recursion      
+class Solution:
+    def lowestCommonAncestor(self, root, A, B):
+        if not root:
+            return None
+        
+        path_a = self.find_path(root, A)
+        path_b = self.find_path(root, B)
+        lca = None
+        while path_a and path_b and path_a[-1] == path_b[-1]:
+            lca = path_a.pop()
+            path_b.pop()
+        return lca
+
+
+    def find_path(self, node, target):
+        if node is None:
+            return None
+        if node is target:
+            return [node]
+            
+        left = self.find_path(node.left, target)
+        if left:
+            left.append(node)
+            return left
+
+        right = self.find_path(node.right, target)
+        if right:
+            right.append(node)
+            return right
+        return None      
       
       
       
