@@ -94,4 +94,33 @@ class Solution:
 
 
 
+# 自己写的找 path
+class Solution:
+    def lowestCommonAncestor3(self, root, A, B):
+        if not root:
+            return 
+        path_a = self.find_path(root, A)
+        path_b = self.find_path(root, B)
+        lca = None
+        while path_a and path_b and path_a[-1] == path_b[-1]:
+            lca = path_a.pop()
+            path_b.pop()
+        return lca
+    
+    def find_path(self, root, target):
+        if not root:
+            return 
+        if root == target:
+            return [root]
 
+        left = self.find_path(root.left, target)
+        if left:
+            left.append(root)
+            return left
+
+        right = self.find_path(root.right, target)
+        if right:
+            right.append(root)
+            return right
+        
+        return 
